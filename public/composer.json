@@ -1,0 +1,5 @@
+{
+    "require": {
+        "php-telegram-bot/core": "^3.0"
+    }
+}
