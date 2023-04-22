@@ -1,4 +1,6 @@
 <?php
+//Kode Api Key Bot
+$botApi = "5578179405:AAFYgUASbwVRuHo8myue-hBpoZh2vL09tk8";
 // Mengambil data JSON dari bot Telegram
 $content = file_get_contents("php://input");
 $update = json_decode($content, true);
