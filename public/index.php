@@ -18,7 +18,7 @@ function getRandomMessage() {
 
 // Fungsi untuk mengirim pesan ke user
 function sendMessage($chatID, $message) {
-    $url = "https://api.telegram.org/botTOKEN_BOT_ANDA/sendMessage?chat_id=".$chatID."&text=".urlencode($message);
+    $url = "https://api.telegram.org/'$botApi'/sendMessage?chat_id=".$chatID."&text=".urlencode($message);
     file_get_contents($url);
 }
 
