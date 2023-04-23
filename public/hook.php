@@ -1,19 +1,15 @@
 <?php
-// Import library PHP Telegram Bot
-use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Message;
 
-// Inisialisasi bot dengan token Anda
-$bot = new Client('5578179405:AAFYgUASbwVRuHo8myue-hBpoZh2vL09tk8');
+define('BOT_TOKEN', '6093828826:AAGzDvezH2YmdvfRPLuAfcU9LiBzA5WC2iw');
 
-// Set webhook URL
-$bot->setWebhook(['url' => 'https://naesan-bot.vercel.app/hook.php']);
+$bot_url = 'https://api.telegram.org/bot' . BOT_TOKEN . '/';
+$webhook_url = 'https://naesan-bot.vercel.app/public/hook.php';
 
-// Tangkap request dari Telegram
-$updates = $bot->getWebhookUpdates();
+$url = $bot_url . 'setWebhook?url=' . $webhook_url;
 
-// Kirim pesan balasan
-$message = $updates->getMessage();
-$bot->sendMessage($message->getChat()->getId(), 'Hello from Vercel!');
+$response = file_get_contents($url);
+
+echo $response;
+
 
 ?>
