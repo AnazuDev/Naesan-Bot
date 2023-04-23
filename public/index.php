@@ -1,6 +1,6 @@
 <?php
 //Kode Api Key Bot
-$botApi = "5578179405:AAFYgUASbwVRuHo8myue-hBpoZh2vL09tk8";
+$botApi = "6093828826:AAGzDvezH2YmdvfRPLuAfcU9LiBzA5WC2iw";
 
 define('BOT_TOKEN', $botApi);
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
