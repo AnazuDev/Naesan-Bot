@@ -1,0 +1,1 @@
+https://api.telegram.org/bot"BOT TOKEN"/setWebhook?url=https://Your Projects.vercel.app/hook.php

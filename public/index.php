@@ -2,41 +2,43 @@
 //Kode Api Key Bot
 $botApi = "6093828826:AAGzDvezH2YmdvfRPLuAfcU9LiBzA5WC2iw";
 
-define('BOT_TOKEN', $botApi);
-define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+$botToken = '6093828826:AAGzDvezH2YmdvfRPLuAfcU9LiBzA5WC2iw';
 
-// Mengambil data JSON dari bot Telegram
-$content = file_get_contents("php://input");
-$update = json_decode($content, true);
+// get incoming message as JSON
+$update = file_get_contents('php://input');
 
-// Mengambil data user dan pesan
-$userID = $update["message"]["from"]["id"];
-$userName = $update["message"]["from"]["username"];
-$message = $update["message"]["text"];
+// decode JSON to array
+$updateArray = json_decode($update, true);
 
-// Fungsi untuk membaca file data.txt dan mengembalikan pesan secara acak
-function getRandomMessage() {
-    $messages = file("data/chat.txt", FILE_IGNORE_NEW_LINES);
-    return $messages[array_rand($messages)];
+// get chat ID from incoming message
+$chatId = $updateArray['message']['chat']['id'];
+
+// send message to chat ID
+$message = 'Hello, your chat ID is ' . $chatId;
+$payload = [
+    'chat_id' => $chatId,
+    'text' => $message,
+];
+
+$apiUrl = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
+$options = [
+    'http' => [
+        'method' => 'POST',
+        'header' => 'Content-Type: application/json',
+        'content' => json_encode($payload),
+    ],
+];
+
+$context = stream_context_create($options);
+$result = file_get_contents($apiUrl, false, $context);
+$response = json_decode($result, true);
+
+if ($response['ok'] == false) {
+    // handle error
+    echo $response['description'];
+} else {
+    // handle success
+    echo 'Message sent successfully';
 }
 
-// Fungsi untuk mengirim pesan ke user
-function sendMessage($chatID, $message) {
-    $url = "https://api.telegram.org/'$botApi'/sendMessage?chat_id=".$chatID."&text=".urlencode($message);
-    file_get_contents($url);
-}
-
-// Cek pesan yang diterima dari user dan memberikan balasan sesuai dengan pesan
-switch ($message) {
-    case "/start":
-        sendMessage($userID, "Halo $userName, selamat datang di bot Telegram!");
-        break;
-    case "/help":
-        sendMessage($userID, "Untuk menggunakan bot ini, kirimkan pesan ke saya dan saya akan membalasnya!");
-        break;
-    default:
-        $reply = getRandomMessage();
-        sendMessage($userID, $reply);
-        break;
-}
 ?>
